@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.kjsingh002.Fragments.ChangePasswordFragment;
+import com.kjsingh002.Fragments.ChangeUsernameFragment;
 import com.kjsingh002.Fragments.MainScreenFragment;
 import com.kjsingh002.Location.AccessLastLocation;
 import com.kjsingh002.Sessions.LoginSession;
@@ -62,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.change_password:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frames_container,new ChangePasswordFragment()).commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                    case R.id.change_username:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frames_container,new ChangeUsernameFragment()).commit();
                         drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     default:

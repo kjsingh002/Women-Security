@@ -14,9 +14,6 @@ public interface UserDao {
     @Insert
     long insertUser(User user);
 
-    @Query("UPDATE User SET contactName=:name AND contactPhone=:phone WHERE userName=:userName")
-    int insertContacts(String userName, String name, String phone);
-
     @Query("UPDATE User SET contactName=:name WHERE userName=:userName")
     int insertContactName(String userName, String name);
 
@@ -34,4 +31,7 @@ public interface UserDao {
 
     @Query("UPDATE User SET password=:newPassword WHERE userName=:username AND password=:oldPassword")
     int updatePassword(String username, String oldPassword, String newPassword);
+
+    @Query("UPDATE User SET userName=:newUserName WHERE userName=:oldUserName AND password=:password")
+    int updateUsername(String oldUserName, String password, String newUserName);
 }
