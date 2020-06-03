@@ -117,10 +117,10 @@ public class MainScreenFragment extends Fragment {
                     public void onSuccess(Location location) {
                         String message = "https://www.google.com/maps?q="+location.getLatitude()+","+location.getLongitude();
                         for (int i=0;i<names.size();i++){
-                            Toast.makeText(getContext(), "Message sent to - "+names.get(i), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Message sent to - "+names.get(i)+" "+ message, Toast.LENGTH_SHORT).show();
                         }
-                        SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage("+16505556789",null,message,null,null);
+                        //SmsManager smsManager = SmsManager.getDefault();
+                        //smsManager.sendTextMessage("+16505556789",null,message,null,null);
                     }
                 });
             }
