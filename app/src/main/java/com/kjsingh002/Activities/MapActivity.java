@@ -37,7 +37,7 @@ public class MapActivity extends AppCompatActivity {
                     public void onMapReady(GoogleMap googleMap) {
                         LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                         googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)).position(latLng).title("My Location"));
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
                     }
                 });
             }
