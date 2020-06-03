@@ -18,7 +18,7 @@ import com.kjsingh002.Activities.R;
 import com.kjsingh002.Location.AccessLastLocation;
 
 public class MainScreenFragment extends Fragment {
-    private ImageView myLocation,nearbyHospitals,nearbyPharmacies;
+    private ImageView myLocation,nearbyHospitals,nearbyPharmacies,myHome;
     private AccessLastLocation accessLastLocation;
 
     public MainScreenFragment() {}
@@ -29,6 +29,7 @@ public class MainScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_screen, container, false);
         accessLastLocation = new AccessLastLocation(getContext());
         myLocation = view.findViewById(R.id.my_location);
+        myHome = view.findViewById(R.id.my_home);
         nearbyHospitals = view.findViewById(R.id.nearby_hospitals);
         nearbyPharmacies = view.findViewById(R.id.nearby_pharmacy);
         myLocation.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +61,20 @@ public class MainScreenFragment extends Fragment {
                     @Override
                     public void onSuccess(Location location) {
                         Uri uri = Uri.parse("geo:"+location.getLatitude()+","+location.getLongitude()+"?q=Pharmacies Nearby");
+                        final Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
+        myHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Task<Location> task = accessLastLocation.getLastLocation();
+                task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        Uri uri = Uri.parse("geo:"+location.getLatitude()+","+location.getLongitude()+"?q=My Home");
                         final Intent intent = new Intent(Intent.ACTION_VIEW,uri);
                         startActivity(intent);
                     }
