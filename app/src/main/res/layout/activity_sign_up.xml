@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical"
+    tools:context=".SignUpActivity">
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/police"
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/signup_activity_username"
+        android:hint="Enter Username"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:inputType="text"
+        android:layout_height="50dp"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="5dp"
+        app:passwordToggleEnabled="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_activity_password"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:layout_marginTop="20dp"
+        android:text="Sign Up"
+        android:onClick="goToMainActivity"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+        <TextView
+            android:textSize="16sp"
+            android:text="Have an account"
+            android:textStyle="bold"
+            android:onClick="goToLoginActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>
