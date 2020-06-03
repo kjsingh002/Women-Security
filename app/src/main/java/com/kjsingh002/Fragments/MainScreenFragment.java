@@ -33,7 +33,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MainScreenFragment extends Fragment {
-    private ImageView myLocation,nearbyHospitals,nearbyPharmacies,myHome,sendLocation;
+    private ImageView myLocation,nearbyHospitals,nearbyPharmacies,nearbyPoliceStations,myHome,sendLocation;
     private AccessLastLocation accessLastLocation;
     private UserNameSession userNameSession;
     private UserDB userDB;
@@ -58,6 +58,7 @@ public class MainScreenFragment extends Fragment {
         nearbyHospitals = view.findViewById(R.id.nearby_hospitals);
         nearbyPharmacies = view.findViewById(R.id.nearby_pharmacy);
         sendLocation = view.findViewById(R.id.send_my_location);
+        nearbyPoliceStations = view.findViewById(R.id.nearby_police_station);
         myLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +121,20 @@ public class MainScreenFragment extends Fragment {
                         }
                         SmsManager smsManager = SmsManager.getDefault();
                         smsManager.sendTextMessage("+16505556789",null,message,null,null);
+                    }
+                });
+            }
+        });
+        nearbyPoliceStations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Task<Location> task = accessLastLocation.getLastLocation();
+                task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        Uri uri = Uri.parse("geo:"+location.getLatitude()+","+location.getLongitude()+"?q=Police Stations Nearby");
+                        final Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                        startActivity(intent);
                     }
                 });
             }
