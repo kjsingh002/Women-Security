@@ -3,6 +3,7 @@ package com.kjsingh002.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
 
@@ -14,6 +15,8 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -53,6 +56,36 @@ public class EmergencyContactsActivity extends AppCompatActivity {
         new GetAllUsers().execute(userNameSession.getLoginUserName());
         toolbar = findViewById(R.id.emergency_contacts_toolbar);
         setSupportActionBar(toolbar);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                view.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(final View v) {
+                        PopupMenu popupMenu = new PopupMenu(EmergencyContactsActivity.this,v);
+                        popupMenu.inflate(R.menu.contact_popup_menu);
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.delete:
+                                        Toast.makeText(EmergencyContactsActivity.this, nameList.get(position)+" Deleted", Toast.LENGTH_SHORT).show();
+                                        nameList.remove(position);
+                                        phoneList.remove(position);
+                                        new UpdateContactName().execute();
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
+                        popupMenu.show();
+                        return true;
+                    }
+                });
+                return false;
+            }
+        });
     }
 
     @Override
@@ -192,5 +225,57 @@ public class EmergencyContactsActivity extends AppCompatActivity {
         final Intent intent = new Intent(EmergencyContactsActivity.this,MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    class UpdateContactName extends AsyncTask<Void,Void,Integer>{
+        String names;
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("contactNames",new JSONArray(nameList));
+                names = jsonObject.toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return userDao.updateContactName(userNameSession.getLoginUserName(),names);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            if (integer <=0){
+                Toast.makeText(EmergencyContactsActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+            }else{
+                new UpdateContactPhone().execute();
+            }
+        }
+    }
+
+    class UpdateContactPhone extends AsyncTask<Void,Void,Integer> {
+        String phones;
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("contactPhones",new JSONArray(phoneList));
+                phones = jsonObject.toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return userDao.updateContactPhone(userNameSession.getLoginUserName(),phones);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            if (integer <= 0){
+                Toast.makeText(EmergencyContactsActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+            }else {
+                new GetAllUsers().execute(userNameSession.getLoginUserName());
+            }
+        }
     }
 }

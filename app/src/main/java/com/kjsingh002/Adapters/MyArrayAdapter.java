@@ -35,27 +35,6 @@ public class MyArrayAdapter extends ArrayAdapter {
         TextView textViewPhones = view.findViewById(R.id.contact_phones);
         textViewNames.setText(names.get(position));
         textViewPhones.setText(phones.get(position));
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(getContext(),view);
-                popupMenu.inflate(R.menu.contact_popup_menu);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.delete:
-                                Toast.makeText(getContext(), names.get(position)+" Deleted", Toast.LENGTH_SHORT).show();
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                });
-                popupMenu.show();
-                return true;
-            }
-        });
         return view;
     }
 

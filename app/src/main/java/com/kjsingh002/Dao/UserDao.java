@@ -34,4 +34,10 @@ public interface UserDao {
 
     @Query("UPDATE User SET userName=:newUserName WHERE userName=:oldUserName AND password=:password")
     int updateUsername(String oldUserName, String password, String newUserName);
+
+    @Query("UPDATE User SET contactName=:contactNames WHERE userName=:userName")
+    int updateContactName(String userName, String contactNames);
+
+    @Query("UPDATE User SET contactPhone=:contactPhones WHERE userName=:userName")
+    int updateContactPhone(String userName, String contactPhones);
 }
