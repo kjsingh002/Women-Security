@@ -47,6 +47,42 @@
             android:gravity="center"
             android:layout_height="180dp">
             <ImageView
+                android:id="@+id/send_my_location"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_baseline_sms_24"
+                android:layout_width="160dp"
+                android:layout_alignParentLeft="true"
+                android:layout_height="160dp"/>
+            <TextView
+                android:text="Send My Location"
+                android:layout_width="160dp"
+                android:layout_alignParentLeft="true"
+                android:textAlignment="center"
+                android:layout_marginRight="5dp"
+                android:layout_below="@id/send_my_location"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/nearby_police_station"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/jail"
+                android:layout_width="160dp"
+                android:layout_toRightOf="@id/send_my_location"
+                android:layout_height="160dp">
+            </ImageView>
+            <TextView
+                android:text="Police Stations Nearby"
+                android:layout_width="160dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/send_my_location"
+                android:textAlignment="center"
+                android:layout_below="@id/nearby_police_station"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="180dp">
+            <ImageView
                 android:id="@+id/nearby_hospitals"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/ic_baseline_local_hospital_24"
