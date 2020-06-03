@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,6 +65,7 @@ public class EmergencyContactsActivity extends AppCompatActivity {
                     public boolean onLongClick(final View v) {
                         PopupMenu popupMenu = new PopupMenu(EmergencyContactsActivity.this,v);
                         popupMenu.inflate(R.menu.contact_popup_menu);
+                        popupMenu.show();
                         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
@@ -79,11 +81,10 @@ public class EmergencyContactsActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                        popupMenu.show();
                         return true;
                     }
                 });
-                return false;
+                return true;
             }
         });
     }
@@ -112,8 +113,13 @@ public class EmergencyContactsActivity extends AppCompatActivity {
                     .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            new AddContactName().execute(userNameSession.getLoginUserName(), name.getText().toString());
-                            new AddContactPhone().execute(userNameSession.getLoginUserName(), phone.getText().toString());
+                            if (TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(phone.getText())) {
+                                name.setError("Field Required");
+                                phone.setError("Field Required");
+                            }else {
+                                new AddContactName().execute(userNameSession.getLoginUserName(), name.getText().toString());
+                                new AddContactPhone().execute(userNameSession.getLoginUserName(), phone.getText().toString());
+                            }
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
